@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class PerguntaRepository implements IPerguntaDatasource {
 
-    private PerguntaDatasourceMock datasource;
+    private IPerguntaDatasource datasource;
 
-    public PerguntaRepository(PerguntaDatasourceMock datasource) {
+    public PerguntaRepository(IPerguntaDatasource datasource) {
         this.datasource = datasource;
     }
 

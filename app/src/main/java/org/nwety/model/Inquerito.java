@@ -7,11 +7,14 @@ import java.util.List;
  */
 public class Inquerito {
 
+    private long id;
+
     private String titulo;
 
     private List<Pergunta> perguntas;
 
-    public Inquerito(String titulo, List<Pergunta> perguntas) {
+    public Inquerito(long id, String titulo, List<Pergunta> perguntas) {
+        this.id = id;
         this.titulo = titulo;
         this.perguntas = perguntas;
     }
@@ -22,5 +25,9 @@ public class Inquerito {
 
     public List<Pergunta> getPerguntas() {
         return perguntas;
+    }
+
+    public long getId() {
+        return id;
     }
 }

@@ -1,17 +1,25 @@
 package org.nwety;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.*;
+import android.widget.TextView;
+import org.nwety.model.Inquerito;
+import org.nwety.perguntas.PerguntasActivity;
+import org.nwety.repository.IInqueritoDatasource;
+import org.nwety.repository.InqueritoDataSourceMock;
+import org.nwety.repository.InqueritoRepository;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,15 +31,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -40,6 +39,23 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        RecyclerView mInqueritosRecyclerView = (RecyclerView) findViewById(R.id.inqueritos_recycler_view);
+        mInqueritosRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mInqueritosRecyclerView.setLayoutManager(mLayoutManager);
+        IInqueritoDatasource repository = new InqueritoRepository(new InqueritoDataSourceMock());
+        InqueritosAdapter.InqueritoOnClickListener mOnCLickListener = new InqueritosAdapter.InqueritoOnClickListener() {
+            @Override
+            public void onClick(Inquerito i) {
+                Intent intent = new Intent(MainActivity.this, PerguntasActivity.class);
+                intent.putExtra(PerguntasActivity.EXTRA_INQUERITO_ID, i.getId());
+                startActivity(intent);
+
+            }
+        };
+        InqueritosAdapter mAdapter = new InqueritosAdapter(repository.getInqueritos(), mOnCLickListener);
+        mInqueritosRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -97,5 +113,54 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private static class InqueritosAdapter extends RecyclerView.Adapter<InqueritosAdapter.ViewHolder> {
+
+        private List<Inquerito> mDataSet;
+
+        private InqueritoOnClickListener mOnCLickListener;
+
+        public InqueritosAdapter(List<Inquerito> mDataSet, InqueritoOnClickListener mOnCLickListener) {
+            this.mDataSet = mDataSet;
+            this.mOnCLickListener = mOnCLickListener;
+        }
+
+        public interface InqueritoOnClickListener {
+            void onClick(Inquerito i);
+        }
+
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+            public CardView mCardView;
+            public TextView mTextView;
+            public ViewHolder(View v) {
+                super(v);
+                mCardView = (CardView) v.findViewById(R.id.inquerito_card_view);
+                mTextView = (TextView) v.findViewById(R.id.inquerito_text_view);
+            }
+        }
+
+        @Override
+        public InqueritosAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.layout_inquerito, parent, false);
+            return new ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(InqueritosAdapter.ViewHolder holder, final int position) {
+            holder.mTextView.setText(mDataSet.get(position).getTitulo());
+            holder.mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnCLickListener.onClick(mDataSet.get(position));
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return mDataSet.size();
+        }
     }
 }
