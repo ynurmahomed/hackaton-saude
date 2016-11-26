@@ -1,9 +1,11 @@
 package org.nweti.perguntas;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,20 +27,26 @@ public class PerguntasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perguntas);
 
         long inqueritoId = getIntent().getLongExtra(EXTRA_INQUERITO_ID, -1);
         if (inqueritoId == -1) {
             Toast.makeText(getApplicationContext(), "Inquerito não foi informado", Toast.LENGTH_SHORT).show();
             finish();
         }
+        IInqueritoDatasource repository = new InqueritoRepository(new InqueritoDataSourceMock());
+        Inquerito inquerito = repository.findInquerito(inqueritoId);
+
+        setContentView(R.layout.activity_perguntas);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.perguntas_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setTitle(inquerito.getTitulo());
 
         mPerguntasRecyclerView = (RecyclerView) findViewById(R.id.perguntas_recyclerview);
         mPerguntasRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mPerguntasRecyclerView.setLayoutManager(mLayoutManager);
-        IInqueritoDatasource repository = new InqueritoRepository(new InqueritoDataSourceMock());
-        Inquerito inquerito = repository.findInquerito(inqueritoId);
         PerguntasAdapter mAdapter = new PerguntasAdapter(inquerito.getPerguntas());
         mPerguntasRecyclerView.setAdapter(mAdapter);
     }

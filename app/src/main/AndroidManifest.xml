@@ -22,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="org.nweti.perguntas.PerguntasActivity">
+        <activity android:name="org.nweti.perguntas.PerguntasActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:parentActivityName=".MainActivity">
         </activity>
         <activity
                 android:name="org.nweti.MainActivity"
