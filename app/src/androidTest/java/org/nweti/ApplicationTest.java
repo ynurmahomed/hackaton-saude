@@ -1,4 +1,4 @@
-package org.nwety;
+package org.nweti;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

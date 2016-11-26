@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        tools:context="org.nwety.perguntas.PerguntasActivity">
+        tools:context="org.nweti.perguntas.PerguntasActivity">
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/perguntas_recyclerview"

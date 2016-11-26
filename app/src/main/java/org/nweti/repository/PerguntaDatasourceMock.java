@@ -1,6 +1,6 @@
-package org.nwety.repository;
+package org.nweti.repository;
 
-import org.nwety.model.Pergunta;
+import org.nweti.model.Pergunta;
 
 import java.util.Arrays;
 import java.util.List;

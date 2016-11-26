@@ -1,4 +1,4 @@
-package org.nwety;
+package org.nweti;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.widget.TextView;
-import org.nwety.model.Inquerito;
-import org.nwety.perguntas.PerguntasActivity;
-import org.nwety.repository.IInqueritoDatasource;
-import org.nwety.repository.InqueritoDataSourceMock;
-import org.nwety.repository.InqueritoRepository;
+import org.nweti.model.Inquerito;
+import org.nweti.perguntas.PerguntasActivity;
+import org.nweti.repository.IInqueritoDatasource;
+import org.nweti.repository.InqueritoDataSourceMock;
+import org.nweti.repository.InqueritoRepository;
 
 import java.util.List;
 

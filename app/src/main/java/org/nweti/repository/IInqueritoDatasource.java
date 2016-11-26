@@ -1,7 +1,7 @@
-package org.nwety.repository;
+package org.nweti.repository;
 
 import android.support.annotation.Nullable;
-import org.nwety.model.Inquerito;
+import org.nweti.model.Inquerito;
 
 import java.util.List;
 

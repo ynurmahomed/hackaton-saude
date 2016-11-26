@@ -1,4 +1,4 @@
-package org.nwety.model;
+package org.nweti.model;
 
 /**
  * Created by yassin on 11/26/16.

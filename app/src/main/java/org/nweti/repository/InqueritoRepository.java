@@ -1,6 +1,6 @@
-package org.nwety.repository;
+package org.nweti.repository;
 
-import org.nwety.model.Inquerito;
+import org.nweti.model.Inquerito;
 
 import java.util.List;
 

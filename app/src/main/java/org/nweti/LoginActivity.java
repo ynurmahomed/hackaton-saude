@@ -1,4 +1,4 @@
-package org.nwety;
+package org.nweti;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

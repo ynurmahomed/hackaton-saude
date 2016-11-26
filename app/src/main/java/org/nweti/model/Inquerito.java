@@ -1,4 +1,4 @@
-package org.nwety.model;
+package org.nweti.model;
 
 import java.util.List;
 

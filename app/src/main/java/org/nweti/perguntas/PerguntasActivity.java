@@ -1,4 +1,4 @@
-package org.nwety.perguntas;
+package org.nweti.perguntas;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.nwety.R;
-import org.nwety.model.Inquerito;
-import org.nwety.model.Pergunta;
-import org.nwety.repository.*;
+import org.nweti.R;
+import org.nweti.model.Inquerito;
+import org.nweti.model.Pergunta;
+import org.nweti.repository.*;
 
 import java.util.List;
 
