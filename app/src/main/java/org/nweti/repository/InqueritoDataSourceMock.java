@@ -27,7 +27,17 @@ public class InqueritoDataSourceMock implements IInqueritoDatasource {
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, -7);
-        this.inqueritos = Collections.singletonList(new Inquerito(1L, cal, 9, "HIV-SIDA", perguntas));
+        Inquerito i1 = new Inquerito(1L, cal, 9, "HIV/SIDA", perguntas);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.add(Calendar.DAY_OF_MONTH, -8);
+        Inquerito i2 = new Inquerito(2L, cal2, 9, "Direitos e deveres na saúde", perguntas);
+
+        Calendar cal3 = Calendar.getInstance();
+        cal3.add(Calendar.DAY_OF_MONTH, -9);
+        Inquerito i3 = new Inquerito(3L, cal3, 9, "Papel dos homens e das mulheres", perguntas);
+
+        this.inqueritos = Arrays.asList(i3, i2, i1);
     }
 
     @Override

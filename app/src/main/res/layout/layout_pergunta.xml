@@ -14,7 +14,8 @@
                 android:id="@+id/pergunta_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/font_size_large"/>
 
 
         <RadioGroup
