@@ -1,7 +1,12 @@
 package org.nweti;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.nweti.model.Inquerito;
 import org.nweti.perguntas.PerguntasActivity;
 import org.nweti.repository.IInqueritoDatasource;
@@ -27,12 +33,18 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private RecyclerView mInqueritosRecyclerView;
+
+    private View mProgressView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Inquéritos");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -43,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        RecyclerView mInqueritosRecyclerView = (RecyclerView) findViewById(R.id.inqueritos_recycler_view);
+        mInqueritosRecyclerView = (RecyclerView) findViewById(R.id.inqueritos_recycler_view);
         mInqueritosRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mInqueritosRecyclerView.setLayoutManager(mLayoutManager);
@@ -59,6 +71,8 @@ public class MainActivity extends AppCompatActivity
         };
         InqueritosAdapter mAdapter = new InqueritosAdapter(repository.getInqueritos(), mOnCLickListener);
         mInqueritosRecyclerView.setAdapter(mAdapter);
+
+        mProgressView = findViewById(R.id.sync_progress);
     }
 
     @Override
@@ -98,24 +112,59 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-/*
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        final Handler handler = new Handler();
+        if (id == R.id.nav_sicronizar) {
+            showProgress(true);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showProgress(false);
+                            Toast.makeText(getApplicationContext(), "Inquéritos sincronizados", Toast.LENGTH_SHORT).show();
+                        }
+                    }, 1000);
+                }
+            }).start();
         }
-*/
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mInqueritosRecyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mInqueritosRecyclerView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mInqueritosRecyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mInqueritosRecyclerView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
     private static class InqueritosAdapter extends RecyclerView.Adapter<InqueritosAdapter.ViewHolder> {
