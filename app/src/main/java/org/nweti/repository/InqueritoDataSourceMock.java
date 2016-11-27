@@ -4,6 +4,7 @@ import org.nweti.model.Inquerito;
 import org.nweti.model.Pergunta;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class InqueritoDataSourceMock implements IInqueritoDatasource {
                 new Pergunta("Muitas vezes te sentes um fracasso"),
                 new Pergunta("Geralmente sente que pode lidar com os problemas típicos que surgem na vida"));
 
-        this.inqueritos = Collections.singletonList(new Inquerito(1L, "Inquérito Master", perguntas));
+        this.inqueritos = Collections.singletonList(new Inquerito(1L, Calendar.getInstance(), 9, "Inquérito Master", perguntas));
     }
 
     @Override

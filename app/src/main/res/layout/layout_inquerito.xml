@@ -12,10 +12,26 @@
                   android:layout_height="wrap_content"
                   android:padding="10dp">
         <TextView
-                android:id="@+id/inquerito_text_view"
+                android:id="@+id/inquerito_titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/inquerito_inicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/inquerito_sessao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"/>
+        </RelativeLayout>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

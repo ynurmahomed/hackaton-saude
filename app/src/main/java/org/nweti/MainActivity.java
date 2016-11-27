@@ -19,7 +19,10 @@ import org.nweti.repository.IInqueritoDatasource;
 import org.nweti.repository.InqueritoDataSourceMock;
 import org.nweti.repository.InqueritoRepository;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,9 +86,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -132,11 +135,15 @@ public class MainActivity extends AppCompatActivity
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             public CardView mCardView;
-            public TextView mTextView;
+            public TextView mTituloTextView;
+            public TextView mInicioTextView;
+            public TextView mSessaoTextView;
             public ViewHolder(View v) {
                 super(v);
                 mCardView = (CardView) v.findViewById(R.id.inquerito_card_view);
-                mTextView = (TextView) v.findViewById(R.id.inquerito_text_view);
+                mTituloTextView = (TextView) v.findViewById(R.id.inquerito_titulo);
+                mInicioTextView = (TextView) v.findViewById(R.id.inquerito_inicio);
+                mSessaoTextView = (TextView) v.findViewById(R.id.inquerito_sessao);
             }
         }
 
@@ -149,13 +156,17 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onBindViewHolder(InqueritosAdapter.ViewHolder holder, final int position) {
-            holder.mTextView.setText(mDataSet.get(position).getTitulo());
+            final Inquerito i = mDataSet.get(position);
+            SimpleDateFormat fmt = new SimpleDateFormat("dd 'de' MMMM", new Locale("pt", "BR"));
             holder.mCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnCLickListener.onClick(mDataSet.get(position));
+                    mOnCLickListener.onClick(i);
                 }
             });
+            holder.mTituloTextView.setText(mDataSet.get(position).getTitulo());
+            holder.mInicioTextView.setText(fmt.format(i.getInicio().getTime()));
+            holder.mSessaoTextView.setText(i.getSessao() + "ª sessão");
         }
 
         @Override
