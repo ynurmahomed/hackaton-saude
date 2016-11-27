@@ -6,10 +6,6 @@
                 android:id="@+id/nav_inquerito"
                 android:icon="@drawable/ic_format_list_bulleted_black_24dp"
                 android:title="Inquéritos"/>
-        <item
-                android:id="@+id/nav_sicronizar"
-                android:icon="@android:drawable/stat_notify_sync"
-                android:title="Sincronizar"/>
 
         <item
                 android:id="@+id/nav_help"
