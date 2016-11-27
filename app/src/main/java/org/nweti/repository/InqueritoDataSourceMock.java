@@ -25,7 +25,9 @@ public class InqueritoDataSourceMock implements IInqueritoDatasource {
                 new Pergunta("Muitas vezes te sentes um fracasso"),
                 new Pergunta("Geralmente sente que pode lidar com os problemas típicos que surgem na vida"));
 
-        this.inqueritos = Collections.singletonList(new Inquerito(1L, Calendar.getInstance(), 9, "Inquérito Master", perguntas));
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -7);
+        this.inqueritos = Collections.singletonList(new Inquerito(1L, cal, 9, "HIV-SIDA", perguntas));
     }
 
     @Override

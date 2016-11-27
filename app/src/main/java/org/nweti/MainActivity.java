@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onBindViewHolder(InqueritosAdapter.ViewHolder holder, final int position) {
             final Inquerito i = mDataSet.get(position);
+            i.setSessao(2);
             SimpleDateFormat fmt = new SimpleDateFormat("dd 'de' MMMM", new Locale("pt", "BR"));
             holder.mCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
