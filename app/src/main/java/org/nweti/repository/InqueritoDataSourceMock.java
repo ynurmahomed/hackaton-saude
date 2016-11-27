@@ -16,12 +16,13 @@ public class InqueritoDataSourceMock implements IInqueritoDatasource {
     private List<Inquerito> inqueritos;
 
     public InqueritoDataSourceMock() {
-        List<Pergunta> perguntas = Arrays.asList(new Pergunta("Tu és forte suficiente capaz de superar os desafios da vida (o)"),
+        List<Pergunta> perguntas = Arrays.asList(
+                new Pergunta("Tu és forte suficiente capaz de superar os desafios da vida"),
                 new Pergunta("Tu és muito fraca (o)"),
                 new Pergunta("Tu és capaz de enfrentar as dificuldades da vida"),
-                new Pergunta("Tu és bem sucedida (o) "),
+                new Pergunta("Tu és bem sucedida (o)"),
                 new Pergunta("Muitas vezes sente que não acerta nada"),
-                new Pergunta("És competente para lidar eficazmente com o mundo real "),
+                new Pergunta("És competente para lidar eficazmente com o mundo real"),
                 new Pergunta("Muitas vezes te sentes um fracasso"),
                 new Pergunta("Geralmente sente que pode lidar com os problemas típicos que surgem na vida"));
 

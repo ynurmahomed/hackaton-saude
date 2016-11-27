@@ -59,7 +59,7 @@ public class PerguntasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.action_responder) {
-            Toast.makeText(getApplicationContext(), "Inquerito respondido.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Inquerito respondido", Toast.LENGTH_SHORT).show();
             finish();
         }
         return super.onOptionsItemSelected(item);
